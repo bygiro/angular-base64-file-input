@@ -23,24 +23,24 @@ angular.module('ByGiro.base64FileInput', [])
 
       elem.on('change', function() {
         var file = elem[0].files[0];
-        fileObject.filetype = file.type;		
-        fileObject.filename = file.name;
+        fileObject.type = file.type;		
+        fileObject.name = file.name;
         fileObject.extension = '';
 		if(file.name.lastIndexOf(".") >= 0){
 			fileObject.extension = file.name.substr(file.name.lastIndexOf(".")+1);
 		}
 		
-        fileObject.filesize = file.size;
+        fileObject.size = file.size;
         fileObject.getPreview = _getPreview;		
         reader.readAsArrayBuffer(file);
 		
         fileObject.previewType = '';
 		switch(true){
-			case (fileObject.filetype.indexOf('image/') >= 0):
+			case (fileObject.type.indexOf('image/') >= 0):
 				fileObject.previewType = 'image';
 				break;
 				
-			case (fileObject.filetype.indexOf('text/') >= 0):
+			case (fileObject.type.indexOf('text/') >= 0):
 				fileObject.previewType = 'text';
 				break;
 				
@@ -67,7 +67,7 @@ angular.module('ByGiro.base64FileInput', [])
 		  
 		  switch(this.previewType){
 			case 'image':
-				preview = "data:image/" + this.filetype + ";base64," + this.base64;
+				preview = "data:image/" + this.type + ";base64," + this.base64;
 				break;
 			
 			case 'text':
