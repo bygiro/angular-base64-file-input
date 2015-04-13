@@ -1,0 +1,35 @@
+{
+  "name": "angular-base64-file-input",
+  "version": "0.0.1",
+  "authors": [
+    "ByGiro <girotomaselli@gmail.com>"
+  ],
+  "contributors": [],
+  "main": [
+	"dist/angular-base64-file-input.js",
+	"dist/angular-base64-file-input.min.js"
+  ],
+  "description": "Angular directive to get the base64 encoded file content and details from a file input",
+  "keywords": [
+    "AngularJs",
+    "form",
+    "ByGiro",
+    "base64",
+    "file"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": ">=1.2.x"
+  },
+  "devDependencies": {
+    "chai": "~1.9.1",
+    "mocha": "~1.21.4"
+  }
+}
