@@ -1,4 +1,4 @@
-<html ng-app="ByGiro.base64FileInput">
+<html ng-app="demoApp">
 <head>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -6,11 +6,84 @@
 
   <script src="../dist/angular-base64-file-input.js"></script>
   <script src="demo.js"></script>
-  <link rel="stylesheet" type="text/css" href="demo.css" />
 
+  <link rel="stylesheet" type="text/css" href="demo.css" />
+  
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body ng-controller="demoCtrl">
+<div class="container-fluid">
 
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Angular directive: Base64 File Input</h1>
+			<p>This is a directive for <a href="https://github.com/angular/angular.js" target="_blank">angular</a> (based on <a href="https://github.com/adonespitogo/angular-base64-upload" target="_blank">@adonespitogo</a> project).
+			It will process a file input returning a base64 string and details of the file.</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<input type="file" autocomplete="off" ng-model="model" ng-change="onChange();" base64-input>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered table-hover table-striped table-condensed">
+				<tr ng-if="model.previewType">
+					<th>Preview</th>
+					<td>
+						<span class="file-upload-preview" ng-switch="model.previewType">
+							<span class="preview-image" ng-switch-when="image">
+								<img ng-src="{{preview}}"/>
+							</span>
+							<span class="preview-text" ng-switch-when="text">
+								<pre>
+									{{preview}}
+								</pre>
+							</span>
+							<span class="preview-extension" ng-switch-default>
+								{{model.extension ? '.'+ model.extension : ''}}
+							</span>
+						</span>
+					</td>
+				</tr>
+				
+				<tr ng-if="model.filename">
+					<th>Filename</th>
+					<td>{{model.filename}}</td>
+				</tr>
+				
+				<tr ng-if="model.filetype">
+					<th>Type</th>
+					<td>{{model.filetype}}</td>
+				</tr>
+				
+				<tr ng-if="model.extension">
+					<th>Extension</th>
+					<td>{{model.extension}}</td>
+				</tr>
+				
+				<tr ng-if="model.filesize">
+					<th>Size</th>
+					<td>{{model.size}} bytes</td>
+				</tr>
+				
+				<tr ng-if="model.base64">
+					<th>Base64 data</th>
+					<td><pre>{{model.base64}}</pre></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</div>
 </body>
 
 </html>
