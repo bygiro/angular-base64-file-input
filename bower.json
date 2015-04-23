@@ -6,8 +6,7 @@
   ],
   "contributors": [],
   "main": [
-	"dist/angular-base64-file-input.js",
-	"dist/angular-base64-file-input.min.js"
+	"dist/angular-base64-file-input.js"
   ],
   "description": "Angular directive to get the base64 encoded file content and details from a file input",
   "keywords": [
