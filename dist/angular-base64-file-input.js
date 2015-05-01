@@ -1,5 +1,4 @@
 /*! angular-simple-base64-upload - v0.0.1 - 13 april 2015
-* https://github.com/adonespitogo/angular-base64-upload
 * Copyright (c) G. Tomaselli <girotomaselli@gmail.com> 2015; Licensed  
 * based on https://github.com/adonespitogo/angular-base64-upload  */
 angular.module('ByGiro.base64FileInput', [])
