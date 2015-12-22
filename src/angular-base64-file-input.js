@@ -1,37 +1,36 @@
-/*! angular-simple-base64-upload - v0.0.1 - 13 april 2015
+/*! angular-simple-base64-upload - v0.0.2 - 13 april 2015
 * Copyright (c) G. Tomaselli <girotomaselli@gmail.com> 2015; Licensed  
 * based on https://github.com/adonespitogo/angular-base64-upload  */
 angular.module('ByGiro.base64FileInput', [])
 .directive('base64Input', ['$window','$parse', function ($window, $parse) {
   return {
     restrict: 'A',
-    require: 'ngModel',
-    link: function (scope, elem, attrs, ngModel) {
-      var fileObject = {};
+	scope: {
+		dataVal: "=?ngModel"
+	},
+    link: function (scope, elem, attrs) {
+      var fileObject = {},
+	  el = elem[0],
+	  isInputFile = (el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector).call(el, 'input[type="file"]');
 
-      scope.readerOnload = function(e){
-        var base64 = _arrayBufferToBase64(e.target.result);
-        fileObject.base64 = base64;
-        scope.$apply(function(){
-          ngModel.$setViewValue(angular.copy(fileObject));
-        });
-      };
-
-      var reader = new FileReader();
-      reader.onload = scope.readerOnload;
-
-      elem.on('change', function() {
-        var file = elem[0].files[0];
-        fileObject.type = file.type;		
-        fileObject.name = file.name;
-        fileObject.extension = '';
-		if(file.name.lastIndexOf(".") >= 0){
-			fileObject.extension = file.name.substr(file.name.lastIndexOf(".")+1);
-		}
-		
-        fileObject.size = file.size;
-        fileObject.getPreview = _getPreview;		
-        reader.readAsArrayBuffer(file);
+	  if(!isInputFile) return;
+	  
+	  var btn = angular.element('<span class="btn btn-info">file</span>');
+	  btn.on('click', function(){
+		  el.click();
+	  });
+	  
+	  elem.css({
+		  width:"1px",
+		  height:"1px",
+		  overflow:'hidden'
+	  });
+	  
+	  elem.after(btn);
+	  
+	  var reader = new FileReader();
+      reader.onload = function(e){
+        fileObject.base64 = _arrayBufferToBase64(e.target.result);
 		
         fileObject.previewType = '';
 		switch(true){
@@ -46,9 +45,30 @@ angular.module('ByGiro.base64FileInput', [])
 			default:
 				fileObject.previewType = 'extension';
 				break;
+		}		
+		
+		var phase = scope.$root.$$phase;
+		if (phase == '$apply' || phase == '$digest') {
+			scope.dataVal = fileObject;
+		} else {
+			scope.$apply(function(){
+				scope.dataVal = fileObject;
+			});
+		}
+      };
+
+      elem.on('change', function(){
+        var file = elem[0].files[0];
+        fileObject.type = file.type;		
+        fileObject.name = file.name;
+        fileObject.extension = '';
+		if(file.name.lastIndexOf(".") >= 0){
+			fileObject.extension = file.name.substr(file.name.lastIndexOf(".")+1);
 		}
 		
-		
+        fileObject.size = file.size;
+        fileObject.getPreview = _getPreview;		
+        reader.readAsArrayBuffer(file);		
       });
 
       function _arrayBufferToBase64( buffer ){
